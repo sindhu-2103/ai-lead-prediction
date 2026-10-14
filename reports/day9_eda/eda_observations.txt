@@ -1,0 +1,22 @@
+DAY 9 - EXPLORATORY DATA ANALYSIS
+
+Total customer records: 45211
+Total original columns: 17
+Missing values: 0
+Duplicate records: 0
+Overall subscription rate: 11.70%
+Highest observed contact-method rate: cellular (14.92%)
+Highest observed job-category rate: student (28.68%)
+Highest observed education-category rate: tertiary (15.01%)
+
+Interpretation notes:
+These results show associations, not proof of cause.
+The contact column records contact method, not a dedicated lead source.
+Check unknown categories before deciding how to treat them.
+
+Charts saved:
+age_distribution.png
+subscription_distribution.png
+conversion_by_contact.png
+conversion_by_job.png
+correlation_matrix.png
