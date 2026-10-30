@@ -1,0 +1,252 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Lead Prediction Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <div>
+            <h1>AI Lead Prediction</h1>
+            <p>Customer Management and Conversion Prediction Dashboard</p>
+        </div>
+        <span id="apiStatus" class="status">Checking API...</span>
+    </header>
+
+    <main class="container">
+
+        <!-- Customer Form -->
+        <section class="card">
+            <h2>Customer Information</h2>
+            <p class="section-description">
+                Enter customer details to save a customer or generate a prediction.
+            </p>
+
+            <form id="customerForm">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Age</label>
+                        <input type="number" name="age" min="18" max="100" value="35" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Job</label>
+                        <select name="job" required>
+                            <option value="technician" selected>Technician</option>
+                            <option value="admin.">Admin</option>
+                            <option value="blue-collar">Blue Collar</option>
+                            <option value="entrepreneur">Entrepreneur</option>
+                            <option value="housemaid">Housemaid</option>
+                            <option value="management">Management</option>
+                            <option value="retired">Retired</option>
+                            <option value="self-employed">Self Employed</option>
+                            <option value="services">Services</option>
+                            <option value="student">Student</option>
+                            <option value="unemployed">Unemployed</option>
+                            <option value="unknown">Unknown</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Marital Status</label>
+                        <select name="marital" required>
+                            <option value="married" selected>Married</option>
+                            <option value="single">Single</option>
+                            <option value="divorced">Divorced</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Education</label>
+                        <select name="education" required>
+                            <option value="secondary" selected>Secondary</option>
+                            <option value="primary">Primary</option>
+                            <option value="tertiary">Tertiary</option>
+                            <option value="unknown">Unknown</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Default</label>
+                        <select name="default" required>
+                            <option value="no" selected>No</option>
+                            <option value="yes">Yes</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Balance</label>
+                        <input type="number" name="balance" value="1500" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Housing Loan</label>
+                        <select name="housing" required>
+                            <option value="yes" selected>Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Personal Loan</label>
+                        <select name="loan" required>
+                            <option value="no" selected>No</option>
+                            <option value="yes">Yes</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Contact</label>
+                        <select name="contact" required>
+                            <option value="cellular" selected>Cellular</option>
+                            <option value="telephone">Telephone</option>
+                            <option value="unknown">Unknown</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Day</label>
+                        <input type="number" name="day" min="1" max="31" value="15" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Month</label>
+                        <select name="month" required>
+                            <option value="may" selected>May</option>
+                            <option value="jan">January</option>
+                            <option value="feb">February</option>
+                            <option value="mar">March</option>
+                            <option value="apr">April</option>
+                            <option value="jun">June</option>
+                            <option value="jul">July</option>
+                            <option value="aug">August</option>
+                            <option value="sep">September</option>
+                            <option value="oct">October</option>
+                            <option value="nov">November</option>
+                            <option value="dec">December</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Campaign</label>
+                        <input type="number" name="campaign" min="1" value="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Previous Days (pdays)</label>
+                        <input type="number" name="pdays" min="-1" value="-1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Previous Contacts</label>
+                        <input type="number" name="previous" min="0" value="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Previous Outcome</label>
+                        <select name="poutcome" required>
+                            <option value="unknown" selected>Unknown</option>
+                            <option value="failure">Failure</option>
+                            <option value="success">Success</option>
+                            <option value="nonexistent">Nonexistent</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="primary-button">
+                        Save Customer
+                    </button>
+
+                    <button type="button" id="predictButton" class="predict-button">
+                        Generate Prediction
+                    </button>
+                </div>
+
+            </form>
+
+            <p id="customerMessage" class="message"></p>
+            <div id="predictionResult" class="prediction-result"></div>
+
+        </section>
+
+
+        <!-- Customer History -->
+        <section class="card">
+
+            <div class="section-heading">
+                <h2>Customer History</h2>
+
+                <button type="button" id="refreshCustomers" class="refresh-button">
+                    Refresh
+                </button>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Age</th>
+                            <th>Job</th>
+                            <th>Balance</th>
+                            <th>Housing</th>
+                            <th>Loan</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="customersTable"></tbody>
+                </table>
+            </div>
+
+        </section>
+
+
+        <!-- Prediction History -->
+        <section class="card">
+
+            <div class="section-heading">
+                <h2>Prediction History</h2>
+
+                <button type="button" id="refreshPredictions" class="refresh-button">
+                    Refresh
+                </button>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Prediction ID</th>
+                            <th>Customer ID</th>
+                            <th>Prediction</th>
+                            <th>Probability</th>
+                            <th>Model</th>
+                            <th>Created At</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="predictionsTable"></tbody>
+                </table>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        AI Lead Prediction Project | FastAPI + SQLite + Machine Learning
+    </footer>
+
+    <script src="app.js"></script>
+
+</body>
+</html>
